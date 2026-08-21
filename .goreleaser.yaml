@@ -25,5 +25,5 @@ brews:
     homepage: https://github.com/allen-hsu/gpc
     description: Google Play Console CLI — agent-friendly wrapper over the Android Publisher API v3
     license: MIT
-    test:
-      system: "#{bin}/gpc --version"
+    test: |
+      system "#{bin}/gpc --version"
