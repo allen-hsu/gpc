@@ -1,0 +1,25 @@
+version: 2
+project_name: gpc
+builds:
+  - main: .
+    binary: gpc
+    env: [CGO_ENABLED=0]
+    goos: [darwin, linux]
+    goarch: [arm64, amd64]
+    ldflags:
+      - -s -w -X github.com/allen-hsu/gpc/cmd.Version={{.Version}}
+archives:
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+checksum:
+  name_template: checksums.txt
+brews:
+  - repository:
+      owner: allen-hsu
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    homepage: https://github.com/allen-hsu/gpc
+    description: Google Play Console CLI — agent-friendly wrapper over the Android Publisher API v3
+    license: MIT
+    test:
+      system: "#{bin}/gpc --version"
