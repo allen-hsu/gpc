@@ -162,8 +162,8 @@ make build       # bin/gpc with version from git describe
 ```
 
 Releases are cut with GoReleaser on tag push (`v*`) and publish to GitHub Releases
-and `allen-hsu/homebrew-tap` (needs a `HOMEBREW_TAP_TOKEN` repo secret with write
-access to the tap).
+and `allen-hsu/homebrew-tap` (formula pushed over SSH with a write deploy key stored as the `HOMEBREW_TAP_SSH_KEY` secret;
+no PAT).
 
 ## License
 

@@ -17,7 +17,11 @@ brews:
   - repository:
       owner: allen-hsu
       name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+      # Formula is pushed over SSH with a repo-scoped write deploy key
+      # (repo secret HOMEBREW_TAP_SSH_KEY). No PAT.
+      git:
+        url: "git@github.com:allen-hsu/homebrew-tap.git"
+        private_key: "{{ .Env.HOMEBREW_TAP_SSH_KEY }}"
     homepage: https://github.com/allen-hsu/gpc
     description: Google Play Console CLI — agent-friendly wrapper over the Android Publisher API v3
     license: MIT
