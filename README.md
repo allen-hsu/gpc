@@ -95,10 +95,10 @@ These are baked into `--help` and the error hints, but they are worth reading on
 
 1. **The API cannot create an app.** Create it in Play Console; the package name is
    bound by the first AAB uploaded (Console or `gpc bundle upload`).
-2. **A draft app only accepts `--status draft` releases.**
-   `Only releases with status draft may be created on draft app.` is not your bug —
-   it means the Console-only checklist (content rating, target audience, countries…)
-   is not finished yet.
+2. **A draft (never-published) app accepts `completed` only on the internal track.**
+   production/alpha/beta answer `Only releases with status draft may be created on
+   draft app.` until the Console-only checklist is done and the first review passes.
+   So: `bundle upload --track internal --status completed` to test, production as draft.
 3. **Data safety CSV header must be byte-exact**, or you get `Invalid header row`.
    `gpc datasafety template` prints the two-line "collects nothing" form, which is a
    complete, valid submission. For anything richer, fill the form once in Console,
@@ -110,6 +110,7 @@ These are baked into `--help` and the error hints, but they are worth reading on
    project that owns the service account. The 403 tells you the exact URL.
 7. **Reviews via API = last 7 days, with comments only.** Star-only ratings are
    Console-only.
+8. **Internal app sharing needs a published app** (`400 NOT_PUBLISHED` before that).
 
 ### Console-only (`gpc console-only`)
 
@@ -147,12 +148,14 @@ Limits are checked locally (in characters, so CJK counts 1) before any edit open
 
 ## Status
 
-Every read-only command and the `--dry-run` write paths have been run against a
-live listing. Commands that commit (`track set`, `datasafety push`, `details set`,
-`mapping upload`, `sharing upload`, `reviews reply`, `testers set`) mirror the
-scripts used for a real submission in 2026-08 but have not been re-run since the
-port to Go; `vitals` is untested until the Reporting API is enabled. Treat 0.x as
-"works, read the output".
+Exercised end to end on a brand-new Play app (Aug 2026): `auth status`,
+`bundle upload --track internal` (81 MB, committed), `track get/set/promote`,
+`listing push`, `images upload`, `details set`, `datasafety push --no-collection`,
+plus the refusal paths (`completed` on production of a draft app, `sharing upload`
+before first publish, unknown package). Read-only commands were also run against a
+live published listing. Not yet exercised for real: `mapping upload`, `reviews reply`,
+`testers set`, `vitals` (needs the Reporting API enabled). Treat 0.x as "works, read
+the output".
 
 ## Development
 

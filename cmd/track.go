@@ -35,8 +35,9 @@ var trackCmd = &cobra.Command{
 A release = a list of versionCodes + status + per-locale notes. The status
 state machine Play accepts:
 
-  draft       saved, not rolled out. The ONLY status a never-published (draft)
-              app accepts: "Only releases with status draft may be created on draft app."
+  draft       saved, not rolled out. On a never-published (draft) app this is the
+              only status production/alpha/beta accept ("Only releases with status
+              draft may be created on draft app"); internal is exempt.
   completed   fully rolled out (100%).
   inProgress  staged rollout; requires --rollout 0<f<1.
   halted      a paused inProgress rollout.
@@ -137,7 +138,8 @@ var trackPromoteCmd = &cobra.Command{
 	Use:   "promote",
 	Short: "Copy the newest release on --from to --to (notes included)",
 	Long: `Reads the first release on --from and writes it to --to with --status
-(default completed). On a draft app you must pass --status draft.
+(default completed). On a draft app, promoting to production/alpha/beta needs
+--status draft; internal accepts completed.
 
 Console equivalent: Release → <track> → Promote release.`,
 	RunE: func(cmd *cobra.Command, args []string) error {

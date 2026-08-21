@@ -41,8 +41,8 @@ var bundleUploadCmd = &cobra.Command{
 	Short: "Resumable upload of an .aab (4 MB chunks, 600 s socket timeout, retried)",
 	Long: `Uploads the bundle with the resumable protocol and commits the edit.
 Optionally assigns the resulting versionCode to a track in the same edit
-(--track internal --status draft) — the first upload to a brand-new app must
-use --status draft, Play rejects anything else on a draft app.
+(--track internal --status completed). On a brand-new (draft) app only the
+internal track accepts completed; production/alpha/beta require --status draft.
 
 Notes:
   • The package name inside the AAB must match --package; on a freshly

@@ -43,7 +43,7 @@ func TestWrapKeepsGoogleMessageAndAddsHint(t *testing.T) {
 	g := &googleapi.Error{Code: 400, Message: "Only releases with status draft may be created on draft app."}
 	err := Wrap("set track production", g)
 	s := err.Error()
-	for _, want := range []string{"HTTP 400", "Only releases with status draft", "hint:", "--status draft"} {
+	for _, want := range []string{"HTTP 400", "Only releases with status draft", "hint:", "internal track"} {
 		if !strings.Contains(s, want) {
 			t.Errorf("missing %q in %q", want, s)
 		}

@@ -74,6 +74,8 @@ var sharingCmd = &cobra.Command{
 	Long: `Console page: Release → Setup → Internal app sharing (to allow uploaders/testers).
 
 The fastest way to hand a build to a tester: no edit, no release, no review.
+Requires the app to have been published at least once (otherwise 400
+NOT_PUBLISHED) — on a brand-new app use the internal track instead.
 The link works for the email addresses allow-listed under Internal app sharing
 and expires after 60 days. Debuggable builds and unsigned bundles are accepted,
 so it is also the only way to distribute a debug build through Play.`,

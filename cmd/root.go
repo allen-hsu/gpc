@@ -40,7 +40,8 @@ main feedback loop when iterating on a payload.
 Hard facts baked into the error hints:
   1. The API cannot create an app. Create it in Play Console first; the package
      name is bound by the first AAB uploaded.
-  2. A draft (never-published) app only accepts releases with --status draft.
+  2. A draft (never-published) app accepts a completed release only on the internal
+     track; production/alpha/beta take --status draft until the first review passes.
   3. An open Play Console tab with an unsaved form steals the edit
      ("A change was made to the application outside of this Edit") — gpc
      reopens the edit and retries once.`,

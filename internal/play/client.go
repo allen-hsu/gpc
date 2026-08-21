@@ -160,9 +160,11 @@ func hintFor(msg string) string {
 	lower := strings.ToLower(msg)
 	switch {
 	case strings.Contains(msg, "Only releases with status draft may be created on draft app"):
-		return "the app is still a draft in Play Console (never published). Use --status draft; Console-only steps (content rating, target audience, data safety review, countries) must be finished by a human before a completed release is allowed."
+		return "the app has never been published. On a draft app only the internal track accepts a completed release; production/alpha/beta accept --status draft only, until a human finishes the Console-only list (content rating, target audience, countries…) and the first review passes. Put the build on internal (completed) to test it, keep production as draft."
 	case strings.Contains(msg, conflictNeedle):
 		return "a Play Console tab has an unsaved form open on this app. Close it (or discard its changes) and rerun; gpc already retried once."
+	case strings.Contains(msg, "NOT_PUBLISHED"):
+		return "internal app sharing only works once the app has been published at least once (any track that went through review). Before that, use the internal track: `gpc bundle upload app.aab --track internal --status completed`."
 	case strings.Contains(msg, "Invalid header row"):
 		return "the data safety CSV header must be exactly: \"Question ID (machine readable),Response ID (machine readable),Response value,Answer requirement,Human-friendly question label\". See `gpc datasafety --help`."
 	case strings.Contains(msg, "applicationNotFound") || strings.Contains(msg, "Package not found") || strings.Contains(msg, "No application was found"):
